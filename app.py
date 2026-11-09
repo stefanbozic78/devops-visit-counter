@@ -24,3 +24,13 @@ def count():
     return {"visits": num }
 
 
+@app.route("/health", methods=["GET"])
+def health():
+    try:
+        redis_client.ping()
+        return {"status": "ok"},200
+    except redis.exceptions.RedisError:
+        return {"status": "error"},503
+
+
+
