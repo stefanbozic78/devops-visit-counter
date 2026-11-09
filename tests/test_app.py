@@ -1,6 +1,4 @@
 from app import app
-from flask import request
-
 
 def test_home():
     client = app.test_client()
@@ -11,4 +9,3 @@ def test_home():
     assert "host" in data  
     assert isinstance(data["host"], str)
     assert len(data["host"]) > 0
-

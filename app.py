@@ -1,17 +1,29 @@
-from flask import Flask
+from flask import Flask,request
 import socket
 import redis
 import os
 
 
 app = Flask(__name__)
+app_port = int(os.getenv("APP_PORT", "8080"))
+
 redis_port = int(os.getenv("REDIS_PORT", "6379"))
 redis_host = os.getenv("REDIS_HOST","redis")
+
+
+
 redis_client = redis.Redis(
     host=redis_host,
     port=redis_port,
     decode_responses=True
 )
+
+# log
+@app.before_request
+def log_request():
+    print(f"Request: {request.method} {request.path}", flush=True)
+
+
 
 @app.route("/", methods=["GET"])
 def home():
@@ -32,5 +44,8 @@ def health():
     except redis.exceptions.RedisError:
         return {"status": "error"},503
 
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=app_port)
 
+    
 
