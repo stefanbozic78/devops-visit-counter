@@ -8,7 +8,7 @@ if [ -z "$URL" ]; then
 fi
 for i in {1..5};do
 
-    STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$URL/health")
+    STATUS=$(curl -s --max-time 5 -o /dev/null -w "%{http_code}" "${URL%/}/health")
     TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 
     echo "[$TIMESTAMP] Attempt $i/5 - HTTP $STATUS"
