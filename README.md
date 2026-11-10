@@ -43,11 +43,11 @@ Provera:
 
 ```bash
 curl http://localhost:8080/          # {"host":"<id kontejnera>","message":"Hello DevOps"}
-curl http://localhost:8080/visits    # {"visits":1}
+curl http://localhost:8080/visits    # {"visits":1}           Napomena: visits ne mora da pocne od 1
 curl http://localhost:8080/visits    # {"visits":2}
 curl http://localhost:8080/health    # {"status":"ok"}
 ```
-Napomena: visits ne mora da pocne od 1
+
 Zaustavljanje:
 
 ```bash
