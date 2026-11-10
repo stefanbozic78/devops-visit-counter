@@ -117,6 +117,19 @@ Koristim `python -m pytest` (a ne samo `pytest`) jer tako trenutni folder ulazi 
 
 Trenutno postoji jedan test: proverava da `/` vraća HTTP 200, očekivanu poruku i neprazno ime hosta. `/visits` i `/health` još nisu pokriveni automatskim testovima, a proveravao sam ih ručno kroz `curl` i `docker compose`.
 
+## Makefile
+
+Za automatizaciju najčešćih zadataka tokom razvoja projekta koristi se **GNU Make**, koji omogućava izvršavanje komandi definisanih u fajlu `Makefile`.
+
+| Komanda | Opis |
+|---|---|
+| `make build` | Kreira Docker image aplikacije |
+| `make up` | Pravi image i pokreće aplikaciju i Redis |
+| `make test` | Pokreće automatizovane testove pomoću Pytest-a |
+| `make down` | Zaustavlja i uklanja kontejnere i mrežu, bez brisanja Redis podataka |
+
+Za korišćenje ovih komandi neophodno je imati instaliran **GNU Make**. Komanda `make test` dodatno zahteva lokalno Python okruženje sa instaliranim zavisnostima iz `requirements.txt`.
+
 ## CI pipeline
 
 Workflow `.github/workflows/ci.yml` se pokreće na push na `main` i `feature/app-endpoints`, kao i na pull request ka `main`. Koraci, redom:
@@ -153,7 +166,7 @@ Istoriju sam gradio u malim commit-ovima. Funkcionalnost je razvijena na grani `
 - **Pogrešno mesto healthcheck-a:** Flask HTTP healthcheck sam greškom stavio pod `redis` servis u `compose.yaml`, pa je Redis stalno bio `unhealthy`. Razdvojio sam ih: `redis-cli ping` za Redis, HTTP `/health` za Flask.
 - **Skripta bez prava izvršavanja:** zbog `core.fileMode=false` Git nije pamtio executable bit, pa je `healthcheck.sh` ušao u repozitorijum kao običan fajl. Rešio sam sa `git update-index --chmod=+x scripts/healthcheck.sh`.
 - **Ruff i importi:** linter je javio pogrešan redosled importa, pa sam ih preuredio.
-
+- **Makefile:** GNU make nije bio instaliran, reseno sa `sudo apt update && sudo apt install make`
 ## Šta bih unapredio da imam više vremena
 
 - **Gunicorn umesto Flask razvojnog servera.** Trenutno kontejner pokreće `python app.py`, odnosno Flask-ov ugrađeni server, koji nije namenjen produkciji.
