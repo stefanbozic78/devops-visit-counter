@@ -143,6 +143,12 @@ Workflow `.github/workflows/ci.yml` se pokreće na push na `main` i `feature/app
 
 Ako bilo koji korak padne, pipeline pada.
 
+### Bezbednosno skeniranje – Trivy
+
+U GitHub Actions CI pipeline integrisan je **Trivy**, alat za automatsko skeniranje Docker image-a i otkrivanje poznatih bezbednosnih ranjivosti u sistemskim paketima i Python bibliotekama.
+
+Prilikom prvog skeniranja otkriveno je **7 HIGH ranjivosti i 0 CRITICAL**.Pronadjene ranjivosti ne obaraju CI(`exit-code: '0'`), kao buduća unapredjenja planirani su : ažuriranje ranjivih paketa i uvodjenje strožih provera.
+
 ## Git tok rada
 
 Istoriju sam gradio u malim commit-ovima. Funkcionalnost je razvijena na grani `feature/app-endpoints` i spojena u `main` kroz Pull Request (vidi karticu *Pull requests* u repozitorijumu).
@@ -172,7 +178,8 @@ Istoriju sam gradio u malim commit-ovima. Funkcionalnost je razvijena na grani `
 - **Gunicorn umesto Flask razvojnog servera.** Trenutno kontejner pokreće `python app.py`, odnosno Flask-ov ugrađeni server, koji nije namenjen produkciji.
 - **Više testova** za `/visits` i `/health`, uključujući slučaj kada je Redis nedostupan (sa mock-ovanim Redis klijentom).
 - **Odvojen `requirements-dev.txt`**, da pytest i ruff ne ulaze u produkcionu sliku.
-- Za dalje: multi-stage build, Trivy skeniranje, objavljivanje slike u GitHub Container Registry i Kubernetes manifesti.
+- **ažuriranje ranjivih paketa i uvodjenje strožih provera** , Trivy dodatni testovi
+- Za dalje: multi-stage build, objavljivanje slike u GitHub Container Registry i Kubernetes manifesti.
 
 ## Korišćeni AI alati
 
