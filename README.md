@@ -157,7 +157,6 @@ Istoriju sam gradio u malim commit-ovima. Funkcionalnost je razvijena na grani `
 ## Šta bih unapredio da imam više vremena
 
 - **Gunicorn umesto Flask razvojnog servera.** Trenutno kontejner pokreće `python app.py`, odnosno Flask-ov ugrađeni server, koji nije namenjen produkciji.
-- **Timeout-i za Redis** (`socket_connect_timeout`, `socket_timeout`), da `/health` vrati 503 umesto da čeka ako Redis ne odgovara.
 - **Više testova** za `/visits` i `/health`, uključujući slučaj kada je Redis nedostupan (sa mock-ovanim Redis klijentom).
 - **Odvojen `requirements-dev.txt`**, da pytest i ruff ne ulaze u produkcionu sliku.
 - Za dalje: multi-stage build, Trivy skeniranje, objavljivanje slike u GitHub Container Registry i Kubernetes manifesti.
