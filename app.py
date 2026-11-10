@@ -1,8 +1,8 @@
-from flask import Flask,request
-import socket
-import redis
 import os
+import socket
 
+import redis
+from flask import Flask, request
 
 app = Flask(__name__)
 app_port = int(os.getenv("APP_PORT", "8080"))
